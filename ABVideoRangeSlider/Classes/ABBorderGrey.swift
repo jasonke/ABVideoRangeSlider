@@ -1,14 +1,14 @@
 //
-//  ABBorder.swift
-//  selfband
+//  ABBorderGrey.swift
+//  Pods
 //
-//  Created by Oscar J. Irun on 27/11/16.
-//  Copyright © 2016 appsboulevard. All rights reserved.
+//  Created by Jason on 2017/5/22.
+//
 //
 
 import UIKit
 
-class ABBorder: UIView {
+class ABBorderGrey: UIView {
 
     var imageView = UIImageView()
     
@@ -16,9 +16,9 @@ class ABBorder: UIView {
         super.init(frame: frame)
         
         let bundle = Bundle(for: ABStartIndicator.self)
-        let image = UIImage(named: "BorderLine", in: bundle, compatibleWith: nil)
+        let image = UIImage(named: "BorderLineGray", in: bundle, compatibleWith: nil)
         self.contentMode = .scaleAspectFit
-        
+
         self.backgroundColor = UIColor(patternImage: image!)
     }
     
@@ -29,5 +29,4 @@ class ABBorder: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
-
 }
