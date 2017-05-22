@@ -31,6 +31,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     var bottomLine          = ABBorder()
     var progressIndicator   = ABProgressIndicator()
     var draggableView       = UIView()
+    var grayTimeline = UIView()
 
     public var startTimeView       = ABTimeView()
     public var endTimeView         = ABTimeView()
@@ -43,7 +44,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     var startPercentage: CGFloat    = 0         // Represented in percentage
     var endPercentage: CGFloat      = 100       // Represented in percentage
 
-    let topBorderHeight: CGFloat      = 5
+    let progressBarHeight: CGFloat = 10
+    let topBorderHeight: CGFloat      = 10
     let bottomBorderHeight: CGFloat   = 5
 
     let indicatorWidth: CGFloat = 20.0
@@ -79,6 +81,13 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     private func setup(){
         self.isUserInteractionEnabled = true
 
+        self.backgroundColor = UIColor.white
+        let bundle = Bundle(for: ABStartIndicator.self)
+        let image = UIImage(named: "BorderLineGray", in: bundle, compatibleWith: nil)
+        grayTimeline.contentMode = .scaleAspectFit
+        grayTimeline.backgroundColor = UIColor(patternImage: image!)
+        self.addSubview(grayTimeline)
+        
         // Setup Start Indicator
         let startDrag = UIPanGestureRecognizer(target:self,
                                                action: #selector(startDragged(recognizer:)))
@@ -87,8 +96,9 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                                         y: -topBorderHeight,
                                                         width: 20,
                                                         height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
-        startIndicator.layer.anchorPoint = CGPoint(x: 1, y: 0.5)
+        startIndicator.layer.anchorPoint = CGPoint(x: 0.5, y: 0.7)
         startIndicator.addGestureRecognizer(startDrag)
+        
         self.addSubview(startIndicator)
 
         // Setup End Indicator
@@ -100,15 +110,16 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                                     y: -topBorderHeight,
                                                     width: indicatorWidth,
                                                     height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
-        endIndicator.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+        endIndicator.layer.anchorPoint = CGPoint(x: 0.5, y: 0.2)
         endIndicator.addGestureRecognizer(endDrag)
+        
         self.addSubview(endIndicator)
 
 
         // Setup Top and bottom line
 
         topLine = ABBorder(frame: CGRect(x: 0,
-                                         y: -topBorderHeight,
+                                         y: (self.frame.size.height - topBorderHeight)/2,
                                          width: indicatorWidth,
                                          height: topBorderHeight))
         self.addSubview(topLine)
@@ -118,6 +129,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                             width: indicatorWidth,
                                             height: bottomBorderHeight))
         self.addSubview(bottomLine)
+        bottomLine.isHidden = true
 
         self.addObserver(self,
                          forKeyPath: "bounds",
@@ -133,8 +145,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                                               y: -topBorderHeight,
                                                               width: 10,
                                                               height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
-        progressIndicator.addGestureRecognizer(progressDrag)
-        self.addSubview(progressIndicator)
+//        progressIndicator.addGestureRecognizer(progressDrag)
+//        self.addSubview(progressIndicator)
 
         // Setup Draggable View
 
@@ -151,10 +163,13 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         startTimeView = ABTimeView(size: CGSize(width: 60, height: 30), position: 1)
         startTimeView.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.addSubview(startTimeView)
+        startTimeView.isHidden = true
 
         endTimeView = ABTimeView(size: CGSize(width: 60, height: 30), position: 1)
         endTimeView.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.addSubview(endTimeView)
+        endTimeView.isHidden = true
+        
     }
 
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -228,18 +243,18 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     }
 
     public func updateThumbnails(){
-        if !isUpdatingThumbnails{
-            self.isUpdatingThumbnails = true
-            let backgroundQueue = DispatchQueue(label: "com.app.queue",
-                                                qos: .background,
-                                                target: nil)
-            backgroundQueue.async {
-                self.thumbnailsManager.updateThumbnails(view: self,
-                                                        videoURL: self.videoURL,
-                                                        duration: self.duration)
-                self.isUpdatingThumbnails = false
-            }
-        }
+//        if !isUpdatingThumbnails{
+//            self.isUpdatingThumbnails = true
+//            let backgroundQueue = DispatchQueue(label: "com.app.queue",
+//                                                qos: .background,
+//                                                target: nil)
+//            backgroundQueue.async {
+//                self.thumbnailsManager.updateThumbnails(view: self,
+//                                                        videoURL: self.videoURL,
+//                                                        duration: self.duration)
+//                self.isUpdatingThumbnails = false
+//            }
+//        }
     }
 
     public func setStartPosition(seconds: Float){
@@ -535,9 +550,9 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                      height: self.frame.height)
 
 
-        topLine.frame = CGRect(x: startIndicator.frame.origin.x + startIndicator.frame.width,
-                               y: -topBorderHeight,
-                               width: endIndicator.frame.origin.x - startIndicator.frame.origin.x - endIndicator.frame.size.width,
+        topLine.frame = CGRect(x: startIndicator.frame.origin.x + startIndicator.frame.width/2,
+                               y: (self.frame.size.height - topBorderHeight)/2,
+                               width: endIndicator.frame.origin.x - startIndicator.frame.origin.x,
                                height: topBorderHeight)
 
         bottomLine.frame = CGRect(x: startIndicator.frame.origin.x + startIndicator.frame.width,
@@ -548,6 +563,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         // Update time view
         startTimeView.center = CGPoint(x: startIndicator.center.x, y: startTimeView.center.y)
         endTimeView.center = CGPoint(x: endIndicator.center.x, y: endTimeView.center.y)
+        
+        grayTimeline.frame = CGRect(x: 0, y: (self.frame.height - progressBarHeight)/2, width: self.frame.width, height: progressBarHeight)
     }
 
 

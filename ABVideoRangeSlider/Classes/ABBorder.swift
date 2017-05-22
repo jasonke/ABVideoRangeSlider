@@ -17,11 +17,13 @@ class ABBorder: UIView {
         
         let bundle = Bundle(for: ABStartIndicator.self)
         let image = UIImage(named: "BorderLine", in: bundle, compatibleWith: nil)
+        self.contentMode = .scaleAspectFit
         
-        imageView.frame = self.bounds
-        imageView.image = image
-        imageView.contentMode = UIViewContentMode.scaleToFill
-        self.addSubview(imageView)
+//        imageView.frame = self.bounds
+//        imageView.image = image
+//        imageView.contentMode = UIViewContentMode.scaleToFill
+        self.backgroundColor = UIColor(patternImage: image!)
+//        self.addSubview(imageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,7 +32,7 @@ class ABBorder: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageView.frame = self.bounds
+//        imageView.frame = self.bounds
     }
 
 }

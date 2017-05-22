@@ -37,16 +37,16 @@ class ViewController: UIViewController, ABVideoRangeSliderDelegate {
     override func viewWillAppear(_ animated: Bool) {
         videoRangeSlider.setVideoURL(videoURL: URL(fileURLWithPath: path!))
         videoRangeSlider.delegate = self
-        videoRangeSlider.minSpace = 60.0
+        videoRangeSlider.minSpace = 0.0
 //        videoRangeSlider.maxSpace = 180.0
 
         lblMinSpace.text = "\(videoRangeSlider.minSpace)"
         
         // Set initial position of Start Indicator
-        videoRangeSlider.setStartPosition(seconds: 50.0)
+//        videoRangeSlider.setStartPosition(seconds: 50.0)
         
         // Set initial position of End Indicator
-        videoRangeSlider.setEndPosition(seconds: 150.0)
+//        videoRangeSlider.setEndPosition(seconds: 150.0)
         
         /* Uncomment to customize the Video Range Slider */
 /*
