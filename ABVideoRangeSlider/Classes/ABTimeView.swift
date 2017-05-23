@@ -22,7 +22,6 @@ open class ABTimeView: UIView {
                                 y: -backgroundView.frame.height - space,
                                 width: backgroundView.frame.width,
                                 height: backgroundView.frame.height)
-            
             self.addSubview(backgroundView)
             self.sendSubview(toBack: backgroundView)
         }
@@ -37,7 +36,7 @@ open class ABTimeView: UIView {
         super.init(frame: frame)
     }
     
-    public init(size: CGSize, position: Int){
+    public init(size: CGSize){
         let frame = CGRect(x: 0,
                            y: -size.height - space,
                            width: size.width,
@@ -46,13 +45,12 @@ open class ABTimeView: UIView {
         
         // Add Background View
         self.backgroundView.frame = self.bounds
-        self.backgroundView.backgroundColor = UIColor.yellow
         self.addSubview(self.backgroundView)
         
         // Add time label
         self.timeLabel = UILabel()
         self.timeLabel.textAlignment = .center
-        self.timeLabel.textColor = UIColor.lightGray
+        self.timeLabel.textColor = UIColor.black
         self.addSubview(self.timeLabel)
 
     }
