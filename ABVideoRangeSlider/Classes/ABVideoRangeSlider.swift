@@ -147,7 +147,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
 //        self.addSubview(progressIndicator)
         
         // Thumbnail View
-        thumbnailView = UIView(frame: CGRect(x: 0, y: self.frame.height + 20, width: self.frame.width, height: self.frame.height))
+        thumbnailView = UIView(frame: CGRect(x: 0, y: self.frame.height + 40, width: self.frame.width, height: self.frame.height * (3/2)))
         thumbnailView.backgroundColor = UIColor.gray
         self.addSubview(thumbnailView)
 
@@ -569,7 +569,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         grayTimeline.frame = CGRect(x: 0, y: (self.frame.height - progressBarHeight)/2, width: self.frame.width, height: progressBarHeight)
         
-        thumbnailView.frame = CGRect(x: 0, y: self.frame.height + 20, width: self.frame.width, height: self.frame.height)
+        thumbnailView.frame = CGRect(x: 0, y: self.frame.height + 20, width: self.frame.width, height: self.frame.height * (3/2))
     }
 
 
