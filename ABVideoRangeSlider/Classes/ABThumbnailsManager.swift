@@ -38,7 +38,7 @@ class ABThumbnailsManager: NSObject {
                 
                 
                 view.addSubview(imageView)
-                UIView.animate(withDuration: 0.2, animations: {() -> Void in
+                UIView.animate(withDuration: 0.5, animations: {() -> Void in
                     imageView.alpha = 1.0
                 })
                 view.sendSubview(toBack: imageView)

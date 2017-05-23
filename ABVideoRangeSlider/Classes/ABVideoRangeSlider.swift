@@ -31,7 +31,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     var bottomLine          = ABBorderGrey()
     var progressIndicator   = ABProgressIndicator()
     var draggableView       = UIView()
-    var grayTimeline = ABBorderGrey()
+    var grayTimeline        = ABBorderGrey()
+    var thumbnailView       = UIView()
 
     public var startTimeView       = ABTimeView()
     public var endTimeView         = ABTimeView()
@@ -144,6 +145,11 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                                               height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
 //        progressIndicator.addGestureRecognizer(progressDrag)
 //        self.addSubview(progressIndicator)
+        
+        // Thumbnail View
+        thumbnailView = UIView(frame: CGRect(x: 0, y: self.frame.height + 20, width: self.frame.width, height: self.frame.height))
+        thumbnailView.backgroundColor = UIColor.gray
+        self.addSubview(thumbnailView)
 
         // Setup Draggable View
 
@@ -240,18 +246,18 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     }
 
     public func updateThumbnails(){
-//        if !isUpdatingThumbnails{
-//            self.isUpdatingThumbnails = true
-//            let backgroundQueue = DispatchQueue(label: "com.app.queue",
-//                                                qos: .background,
-//                                                target: nil)
-//            backgroundQueue.async {
-//                self.thumbnailsManager.updateThumbnails(view: self,
-//                                                        videoURL: self.videoURL,
-//                                                        duration: self.duration)
-//                self.isUpdatingThumbnails = false
-//            }
-//        }
+        if !isUpdatingThumbnails{
+            self.isUpdatingThumbnails = true
+            let backgroundQueue = DispatchQueue(label: "com.app.queue",
+                                                qos: .background,
+                                                target: nil)
+            backgroundQueue.async {
+                self.thumbnailsManager.updateThumbnails(view: self.thumbnailView,
+                                                        videoURL: self.videoURL,
+                                                        duration: self.duration)
+                self.isUpdatingThumbnails = false
+            }
+        }
     }
 
     public func setStartPosition(seconds: Float){
@@ -562,6 +568,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         endTimeView.center = CGPoint(x: endIndicator.center.x, y: endTimeView.center.y)
         
         grayTimeline.frame = CGRect(x: 0, y: (self.frame.height - progressBarHeight)/2, width: self.frame.width, height: progressBarHeight)
+        
+        thumbnailView.frame = CGRect(x: 0, y: self.frame.height + 20, width: self.frame.width, height: self.frame.height)
     }
 
 
