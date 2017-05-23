@@ -205,7 +205,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                 self.progressPercentage = self.valueFromSeconds(seconds: Float(seconds))
             }
 
-            layoutSubviews()
+            setNeedsLayout()
         }
     }
 
@@ -241,7 +241,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public func setVideoURL(videoURL: URL){
         self.duration = ABVideoHelper.videoDuration(videoURL: videoURL)
         self.videoURL = videoURL
-        self.superview?.layoutSubviews()
+        self.layoutIfNeeded()
         self.updateThumbnails()
     }
 
@@ -262,12 +262,12 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
 
     public func setStartPosition(seconds: Float){
         self.startPercentage = self.valueFromSeconds(seconds: seconds)
-        layoutSubviews()
+        setNeedsLayout()
     }
 
     public func setEndPosition(seconds: Float){
         self.endPercentage = self.valueFromSeconds(seconds: seconds)
-        layoutSubviews()
+        setNeedsLayout()
     }
 
     // MARK: - Private functions
@@ -367,7 +367,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         self.progressPercentage = progressPercentage
         
-        layoutSubviews()
+        setNeedsLayout()
     }
     
     func progressDragged(recognizer: UIPanGestureRecognizer){
@@ -405,7 +405,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
 
         self.progressPercentage = percentage
 
-        layoutSubviews()
+        setNeedsLayout()
     }
 
     func viewDragged(recognizer: UIPanGestureRecognizer){
@@ -457,7 +457,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.endPercentage = endPercentage
         self.progressPercentage = progressPercentage
 
-        layoutSubviews()
+        setNeedsLayout()
     }
     
     // MARK: - Drag Functions Helpers
