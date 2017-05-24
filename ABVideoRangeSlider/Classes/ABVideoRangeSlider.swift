@@ -48,6 +48,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     let progressBarHeight: CGFloat = 20
     let topBorderHeight: CGFloat      = 20
     let bottomBorderHeight: CGFloat   = 20
+    let progressWrapHeight: CGFloat = 40
 
     let indicatorWidth: CGFloat = 20.0
 
@@ -93,7 +94,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         startIndicator = ABStartIndicator(frame: CGRect(x: 0,
                                                         y: -topBorderHeight,
                                                         width: indicatorWidth,
-                                                        height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
+                                                        height: progressWrapHeight + bottomBorderHeight + topBorderHeight))
         startIndicator.layer.anchorPoint = CGPoint(x: 0.5, y: 0.8)
         startIndicator.addGestureRecognizer(startDrag)
         
@@ -107,7 +108,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         endIndicator = ABEndIndicator(frame: CGRect(x: 0,
                                                     y: -topBorderHeight,
                                                     width: indicatorWidth,
-                                                    height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
+                                                    height: progressWrapHeight + bottomBorderHeight + topBorderHeight))
         endIndicator.layer.anchorPoint = CGPoint(x: 0.5, y: 0.2)
         endIndicator.addGestureRecognizer(endDrag)
         
@@ -117,13 +118,13 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         // Setup Top and bottom line
 
         topLine = ABBorder(frame: CGRect(x: 0,
-                                         y: (self.frame.size.height - topBorderHeight)/2,
+                                         y: (progressWrapHeight - topBorderHeight)/2,
                                          width: indicatorWidth,
                                          height: topBorderHeight))
         self.addSubview(topLine)
 
         bottomLine = ABBorderGrey(frame: CGRect(x: 0,
-                                            y: self.frame.size.height,
+                                            y: progressWrapHeight,
                                             width: indicatorWidth,
                                             height: bottomBorderHeight))
         self.addSubview(bottomLine)
@@ -142,12 +143,12 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         progressIndicator = ABProgressIndicator(frame: CGRect(x: 0,
                                                               y: -topBorderHeight,
                                                               width: 10,
-                                                              height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
+                                                              height: progressWrapHeight + bottomBorderHeight + topBorderHeight))
 //        progressIndicator.addGestureRecognizer(progressDrag)
 //        self.addSubview(progressIndicator)
         
         // Thumbnail View
-        thumbnailView = UIView(frame: CGRect(x: 0, y: self.frame.height + 40, width: self.frame.width, height: self.frame.height * (3/2)))
+        thumbnailView = UIView(frame: CGRect(x: 0, y: progressWrapHeight + 40, width: self.frame.width, height: progressWrapHeight * (3/2)))
         thumbnailView.backgroundColor = UIColor.gray
         self.addSubview(thumbnailView)
 
@@ -548,16 +549,16 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         draggableView.frame = CGRect(x: startIndicator.frame.origin.x + startIndicator.frame.size.width,
                                      y: 0,
                                      width: endIndicator.frame.origin.x - startIndicator.frame.origin.x - endIndicator.frame.size.width,
-                                     height: self.frame.height)
+                                     height: progressWrapHeight)
 
 
         topLine.frame = CGRect(x: 0,
-                               y: (self.frame.size.height - topBorderHeight)/2,
+                               y: (progressWrapHeight - topBorderHeight)/2,
                                width: endIndicator.frame.origin.x + endIndicator.frame.width/2,
                                height: topBorderHeight)
 
         bottomLine.frame = CGRect(x: 0,
-                                  y: (self.frame.size.height - bottomBorderHeight)/2,
+                                  y: (progressWrapHeight - bottomBorderHeight)/2,
                                   width: startIndicator.frame.origin.x + startIndicator.frame.width/2,
                                   height: bottomBorderHeight)
 
@@ -565,9 +566,9 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         startTimeView.center = CGPoint(x: startIndicator.center.x, y: startTimeView.center.y)
         endTimeView.center = CGPoint(x: endIndicator.center.x, y: endTimeView.center.y)
         
-        grayTimeline.frame = CGRect(x: 0, y: (self.frame.height - progressBarHeight)/2, width: self.frame.width, height: progressBarHeight)
+        grayTimeline.frame = CGRect(x: 0, y: (progressWrapHeight - progressBarHeight)/2, width: self.frame.width, height: progressBarHeight)
         
-        thumbnailView.frame = CGRect(x: 0, y: self.frame.height + 20, width: self.frame.width, height: self.frame.height * (3/2))
+        thumbnailView.frame = CGRect(x: 0, y: progressWrapHeight + 20, width: self.frame.width, height: progressWrapHeight * (3/2))
     }
 
 
@@ -575,7 +576,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         let extendedBounds = CGRect(x: -startIndicator.frame.size.width,
                                     y: -topLine.frame.size.height,
                                     width: self.frame.size.width + startIndicator.frame.size.width + endIndicator.frame.size.width,
-                                    height: self.frame.size.height + topLine.frame.size.height + bottomLine.frame.size.height)
+                                    height: progressWrapHeight + topLine.frame.size.height + bottomLine.frame.size.height)
         return extendedBounds.contains(point)
     }
 
