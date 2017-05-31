@@ -251,7 +251,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                                 qos: .background,
                                                 target: nil)
             backgroundQueue.async {
-                self.thumbnailsManager.updateThumbnails(view: self.thumbnailView,
+                _ = self.thumbnailsManager.updateThumbnails(view: self.thumbnailView,
                                                         videoURL: self.videoURL,
                                                         duration: self.duration)
                 self.isUpdatingThumbnails = false
@@ -330,7 +330,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         currentIndicator.center = CGPoint(x: position , y: currentIndicator.center.y)
         
-        var percentage = currentIndicator.center.x * 100 / self.frame.width
+        let percentage = currentIndicator.center.x * 100 / self.frame.width
         
         let startSeconds = secondsFromValue(value: self.startPercentage)
         let endSeconds = secondsFromValue(value: self.endPercentage)
