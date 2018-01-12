@@ -164,11 +164,11 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
 
         // Setup time labels
 
-        startTimeView = ABTimeView(size: CGSize(width: 82, height: 30))
+        startTimeView = ABTimeView(size: CGSize(width: 110, height: 30))
         startTimeView.layer.anchorPoint = CGPoint(x: -0.1, y: -0.21)
         self.addSubview(startTimeView)
 
-        endTimeView = ABTimeView(size: CGSize(width: 82, height: 30))
+        endTimeView = ABTimeView(size: CGSize(width: 110, height: 30))
         endTimeView.layer.anchorPoint = CGPoint(x: 1.1, y: -1.7)
         self.addSubview(endTimeView)
         
@@ -585,8 +585,9 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         let hours:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 86400) / 3600)
         let minutes:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 3600) / 60)
         let seconds:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
+        let centiSeconds = Int(totalSeconds.truncatingRemainder(dividingBy: 1)*100)
 
-        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
+        return String(format: "%02i:%02i:%02i.%02i", hours, minutes, seconds, centiSeconds)
     }
 
     deinit {
