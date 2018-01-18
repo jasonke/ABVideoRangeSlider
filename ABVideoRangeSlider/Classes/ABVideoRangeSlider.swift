@@ -247,13 +247,11 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public func updateThumbnails(){
         if !isUpdatingThumbnails{
             self.isUpdatingThumbnails = true
-            let backgroundQueue = DispatchQueue(label: "com.app.queue",
-                                                qos: .background,
-                                                target: nil)
-            backgroundQueue.async {
+            
+            DispatchQueue.main.async {
                 _ = self.thumbnailsManager.updateThumbnails(view: self.thumbnailView,
-                                                        videoURL: self.videoURL,
-                                                        duration: self.duration)
+                                                            videoURL: self.videoURL,
+                                                            duration: self.duration)
                 self.isUpdatingThumbnails = false
             }
         }
